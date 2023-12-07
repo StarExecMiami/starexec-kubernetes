@@ -1,14 +1,16 @@
 FROM e---3.0.03-build AS builder
-FROM alpine:latest
-RUN apk update && apk add --no-cache tcsh
+FROM tptp-world-build
+
+RUN apk update && apk add --no-cache tcsh 
 
 ENV PATH=".:${PATH}"
 WORKDIR /artifacts
 
+# E-specific stuff from ostensibly external image
 COPY --from=builder /artifacts/eprover /artifacts/
 COPY --from=builder /artifacts/eprover-ho /artifacts/
-ADD run_E /artifacts/run_E
-ADD tptp4X /artifacts/tptp4X
-ADD SPCForProblem /artifacts/SPCForProblem
+
+# run_E script 
+ADD run_E /artifacts/
 
 ENTRYPOINT ["run_E"] 
