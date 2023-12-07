@@ -9,7 +9,7 @@ onintr cleanup
 #----Add extra ()s for THF and TXF
 $HERE/tptp4X -t uniquenames4 -x $1 > $PROBLEMFILE
 
-set SPCLine=`grep "^% SPC " $PROBLEMFILE`
+set SPCLine=`grep -E "^% SPC " $PROBLEMFILE`
 if ("$SPCLine" != "") then
     set ProblemSPC = `expr "$SPCLine" : "^% SPC  *: *\([^ ]*\)"`
 else
