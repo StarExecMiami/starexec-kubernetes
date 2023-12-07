@@ -1,16 +1,17 @@
 FROM alpine-build
 
 # Clones repository
-ARG E_VERSION=E-3.0pre008
+ARG E_VERSION=E-3.0.03
 RUN git clone --depth 1 --branch $E_VERSION https://github.com/eprover/eprover.git
 
 # Set working directory to cloned sources directory
 WORKDIR /eprover
 
 # Builds first-order executable
-RUN ./configure && \
-    make rebuild
-RUN cp PROVER/eprover /artifacts/eprover
+RUN ./configure --bindir=/artifacts && \
+    make && \
+    make install
+# RUN cp PROVER/eprover /artifacts/eprover
 
 # Builds higher-order executable
 RUN ./configure --enable-ho && \
