@@ -13,4 +13,4 @@ COPY --from=builder /artifacts/eprover-ho /artifacts/
 # run_E script 
 ADD run_E /artifacts/
 
-ENTRYPOINT ["run_E"] 
+ENTRYPOINT ["/artifacts/runsolver", "/artifacts/run_E"]
