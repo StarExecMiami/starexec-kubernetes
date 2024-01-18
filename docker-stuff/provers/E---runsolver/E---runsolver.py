@@ -3,6 +3,7 @@
 import argparse
 import subprocess
 import os
+import shutil
 
 if __name__ == "__main__":
 
@@ -24,11 +25,14 @@ if __name__ == "__main__":
     if args.memory_limit > 0:
         runsolver_args += f" -M {args.memory_limit}"
 
-    run_E_args = f"/artifacts/{problemBase} {args.wall_clock_limit} {args.intent}"
+    run_E_args = f"/artifacts/CWD/benchmark {args.wall_clock_limit} {args.intent}"
 
-    command = f"podman run -v {args.problem}:/artifacts/{problemBase} -t {args.image_name} --timestamp {runsolver_args} run_E {run_E_args}"
+    command = f"podman run -v .:/artifacts/CWD -t {args.image_name} --timestamp {runsolver_args} run_E {run_E_args}"
     if args.dry_run:
         print(command)
     else:
+        shutil.copy(args.problem, "./benchmark")
         subprocess.run(command, shell=True)
+        os.remove("./benchmark")
+    
 

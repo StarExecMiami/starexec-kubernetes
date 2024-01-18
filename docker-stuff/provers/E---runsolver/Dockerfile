@@ -13,4 +13,4 @@ COPY --from=builder /artifacts/eprover-ho /artifacts/
 # run_E script 
 ADD run_E /artifacts/
 
-ENTRYPOINT ["runsolver"]
+ENTRYPOINT ["runsolver", "--timestamp"]
