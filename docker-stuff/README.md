@@ -17,14 +17,14 @@ podman build -t tptp-world-build .
 
 Now build `e---3.0.03-build` image:
 ```shell
-cd ../E---3.0.03/build
+cd ../provers/E---3.0.03/build/
 podman build -t e---3.0.03-build .
 ```
 
 Now build `e---control` image:
 ```shell
-cd ../../E---control
-podman build -t e---control .
+cd ../../E---runsolver
+podman build -t e---runsolver .
 ```
 
 Now run the image to see the results:
@@ -32,5 +32,24 @@ Now run the image to see the results:
 cd ../../ # back to docker-stuff dir
 podman run -v "$PWD/MPT0001+1.p":"/artifacts/MPT0001+1.p" -t e---control MPT0001+1.p 10 THM
 ```
+
+## To run using the E---runsolver.py script
+
+python3 E---runsolver.py PUZ001+1.p 
+
+## To put it in dockerhub
+
+podman login docker.io
+podman tag e---runsolver docker.io/geoffgeoffgeoff3/starexec-provers-e-runsolver:latest
+podman push docker.io/geoffgeoffgeoff3/starexec-provers-e-runsolver:latest
+
+## To pull it from dockerhub
+
+podman pull geoffgeoffgeoff3/starexec-provers-e-runsolver
+
+## To run it 
+
+You need the E---runsolver.py script and a problem e.g., PUZ001+1.p (both in GitHub)
+python3 E---runsolver.py --image-name docker.io/geoffgeoffgeoff3/starexec-provers-e-runsolver PUZ001+1.p
 
 
