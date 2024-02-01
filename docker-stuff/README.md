@@ -60,9 +60,9 @@ python3 E---runsolver.py PUZ001+1.p
 
 ## To put it in dockerhub
 
-podman login docker.io
-podman tag e---runsolver docker.io/tptpstarexec/e-runsolver:latest
-podman push docker.io/tptpstarexec/e-runsolver:latest
+podman login docker.io (tptpstarexec, German greeting with money-in-middle and zeros-at-the-end)
+podman tag e---runsolver docker.io/tptpstarexec/e-runsolver:your_architecture (e.g., ARM64, AMD64)
+podman push docker.io/tptpstarexec/e-runsolver:your_architecture
 
 ## To pull it from dockerhub
 
