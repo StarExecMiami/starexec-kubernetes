@@ -36,20 +36,22 @@ podman build -t tptp-world-build .
 
 Now build `e---3.0.03-build` image:
 ```shell
-cd ../provers/E---3.0.03/build/
+cd ../../provers/E---3.0.03/build/
 podman build -t e---3.0.03-build .
 ```
 
-Now build `e---control` image:
+Now build `e---runsolver` image:
 ```shell
 cd ../../E---runsolver
 podman build -t e---runsolver .
 ```
 
-Now run the image to see the results:
+Now you cannot run the image to see the results:
+(Goto next instruction and the python script gives an example if you want 
+to see how to actually invoke podman)
 ```shell
 cd ../../ # back to docker-stuff dir
-podman run -v "$PWD/MPT0001+1.p":"/artifacts/MPT0001+1.p" -t e---control MPT0001+1.p 10 THM
+podman run -v "$PWD/MPT0001+1.p":"/artifacts/MPT0001+1.p" -t e---runsolver MPT0001+1.p 10 THM
 ```
 
 ## To run using the E---runsolver.py script
@@ -59,16 +61,16 @@ python3 E---runsolver.py PUZ001+1.p
 ## To put it in dockerhub
 
 podman login docker.io
-podman tag e---runsolver docker.io/geoffgeoffgeoff3/starexec-provers-e-runsolver:latest
-podman push docker.io/geoffgeoffgeoff3/starexec-provers-e-runsolver:latest
+podman tag e---runsolver docker.io/tptpstarexec/e-runsolver:latest
+podman push docker.io/tptpstarexec/e-runsolver:latest
 
 ## To pull it from dockerhub
 
-podman pull geoffgeoffgeoff3/starexec-provers-e-runsolver
+podman pull tptpstarexec/e-runsolver
 
 ## To run it 
 
 You need the E---runsolver.py script and a problem e.g., PUZ001+1.p (both in GitHub)
-python3 E---runsolver.py --image-name docker.io/geoffgeoffgeoff3/starexec-provers-e-runsolver PUZ001+1.p
+python3 E---runsolver.py --image-name docker.io/tptpstarexec/e-runsolver PUZ001+1.p
 
 
