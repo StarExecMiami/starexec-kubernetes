@@ -66,11 +66,12 @@ podman push docker.io/tptpstarexec/e-runsolver:your_architecture
 
 ## To pull it from dockerhub
 
-podman pull tptpstarexec/e-runsolver
+podman pull tptpstarexec/e-runsolver:your_architecture
 
 ## To run it 
 
 You need the E---runsolver.py script and a problem e.g., PUZ001+1.p (both in GitHub)
-python3 E---runsolver.py --image-name docker.io/tptpstarexec/e-runsolver PUZ001+1.p
+cd provers/E---runsolver
+python3 E---runsolver.py --image-name docker.io/tptpstarexec/e-runsolver:your_architecture PUZ001+1.p
 
 
