@@ -1,4 +1,4 @@
-FROM e---3.0.03-build AS builder
+FROM eprover-build AS builder
 FROM tptp-world-build
 
 RUN apk update && apk add --no-cache tcsh 

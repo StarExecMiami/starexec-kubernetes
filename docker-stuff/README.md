@@ -34,16 +34,18 @@ cd ../tptp-world-build
 podman build -t tptp-world-build .
 ```
 
-Now build `e---3.0.03-build` image:
+Now build `eprover-build` image. Note that the version number is not in the tag, so the next
+step to build the eprover:version-runsolver image will always use the eprover-build:latest, 
+which might be a new version of E.
 ```shell
 cd ../../provers/E---3.0.03/build/
-podman build -t e---3.0.03-build .
+podman build -t eprover-build .
 ```
 
-Now build `e---runsolver` image:
+Now build `eprover:version-runsolver` image:
 ```shell
 cd ../../E---runsolver
-podman build -t e---runsolver .
+podman build -t eprover:3.0.03-runsolver .
 ```
 
 Now you cannot run the image to see the results:
@@ -56,13 +58,13 @@ podman run -v "$PWD/MPT0001+1.p":"/artifacts/MPT0001+1.p" -t e---runsolver MPT00
 
 ## To run using the E---runsolver.py script
 
-python3 E---runsolver.py PUZ001+1.p 
+python3 E---runsolver.py --image-name eprover:3.0.03-runsolver PUZ001+1.p 
 
 ## To put it in dockerhub
 
 podman login docker.io (tptpstarexec, German greeting with money-in-middle and zeros-at-the-end)
-podman tag e---runsolver docker.io/tptpstarexec/e-runsolver:your_architecture (e.g., ARM64, AMD64)
-podman push docker.io/tptpstarexec/e-runsolver:your_architecture
+podman tag eprover:3.0.03-runsolver docker.io/tptpstarexec/eprover:3.0.03-runsolver-your_architecture (e.g., arm64, amd64)
+podman push docker.io/tptpstarexec/eprover:3.0.03-runsolver-your_architecture
 
 ## To pull it from dockerhub
 
