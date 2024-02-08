@@ -1,7 +1,7 @@
 FROM alpine:latest
 
 # Install build dependencies
-RUN apk add --update build-base bash git
+RUN apk add --update build-base bash git cmake perf
 
 # PicoSAT fix (see https://stackoverflow.com/questions/52894632/cannot-install-pycosat-on-alpine-during-dockerizing)
 # In musl (the libc library implementation used in Alpine) the unistd.h header is located at the system headers root folder (/usr/include) 
