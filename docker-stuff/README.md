@@ -38,7 +38,7 @@ Now build `eprover-build` image. Note that the version number is not in the tag,
 step to build the eprover:version-runsolver image will always use the eprover-build:latest, 
 which might be a new version of E.
 ```shell
-cd ../../provers/E---3.0.03/build/
+cd ../../provers/eprover/E---3.0.03/build/
 podman build -t eprover-build .
 ```
 
@@ -52,7 +52,7 @@ Now you cannot run the image to see the results:
 (Goto next instruction and the python script gives an example if you want 
 to see how to actually invoke podman)
 ```shell
-cd ../../ # back to docker-stuff dir
+cd ../../../ # back to docker-stuff dir
 podman run -v "$PWD/MPT0001+1.p":"/artifacts/MPT0001+1.p" -t e---runsolver MPT0001+1.p 10 THM
 ```
 
