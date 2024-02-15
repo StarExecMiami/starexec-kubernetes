@@ -1,4 +1,4 @@
-FROM alpine-build
+FROM ubuntu-build
 
 # Clones repository
 ARG E_VERSION=E-3.0.03

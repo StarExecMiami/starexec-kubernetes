@@ -20,11 +20,11 @@ Running a container with Podman/Docker (interactive shell):
 
 ## To build and run a TPTP docker image for E (example)
 
-First clone this repo and build `alpine-build` image:
+First clone this repo and build `ubuntu-build` image:
 ```shell
 git clone https://github.com/StarExecMiami/starexec-kubernetes.git
-cd starexec-kubernetes/docker-stuff/base-build/alpine-build
-podman build -t alpine-build .
+cd starexec-kubernetes/docker-stuff/base-build/ubuntu-build
+podman build -t ubuntu-build .
 podman image ls   # to see what was built
 ```
 

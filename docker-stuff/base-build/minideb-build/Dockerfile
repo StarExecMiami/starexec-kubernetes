@@ -1,8 +1,8 @@
-FROM bitnami/minideb
+FROM docker.io/bitnami/minideb
 
 # Install gcc, make & co, also GIT
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends build-essential cmake git
+    apt-get install -y --no-install-recommends build-essential cmake git linux-tools
 
 # Configure GIT to clone repos
 RUN export GIT_SSL_NO_VERIFY=1 && \

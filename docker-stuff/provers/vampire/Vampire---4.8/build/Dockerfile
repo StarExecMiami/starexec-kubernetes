@@ -1,6 +1,4 @@
-FROM alpine-build
-
-RUN ls /usr/include/linux
+FROM ubuntu-build
 
 ARG VAMPIRE_VERSION=v4.7
 RUN git clone --depth 1 --branch $VAMPIRE_VERSION https://github.com/vprover/vampire.git
