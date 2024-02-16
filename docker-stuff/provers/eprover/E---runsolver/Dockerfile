@@ -1,8 +1,6 @@
 FROM eprover-build AS builder
 FROM tptp-world-build
 
-RUN apk update && apk add --no-cache tcsh 
-
 ENV PATH=".:${PATH}"
 WORKDIR /artifacts
 
