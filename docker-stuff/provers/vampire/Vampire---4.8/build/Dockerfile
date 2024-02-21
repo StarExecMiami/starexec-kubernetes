@@ -1,9 +1,20 @@
 FROM ubuntu-build
 
-ARG VAMPIRE_VERSION=v4.7
-RUN git clone --depth 1 --branch $VAMPIRE_VERSION https://github.com/vprover/vampire.git
+RUN git clone --depth 1 --recurse-submodules --shallow-submodules https://github.com/vprover/vampire.git
 
 # Set working directory to cloned sources directory
+WORKDIR vampire
+
+# Build Z3 into vampire/z3/build
+RUN mkdir -p z3/build 
+WORKDIR z3/build
+
+# Configure single-threaded build, no debug symbols
+RUN cmake .. -DZ3_SINGLE_THREADED=1 -DCMAKE_BUILD_TYPE=Release ; cat /vampire/z3/build/CMakeFiles/CMakeOutput.log
+
+# Build Z3, in this case with make(1)
+RUN make
+
 WORKDIR vampire
 
 RUN mkdir /tmp/build && cd /tmp/build
@@ -12,7 +23,8 @@ RUN cmake /vampire
 
 RUN make
 
-RUN cp bin/vampire* /artifacts/
+RUN ls bin
+RUN cp bin/vampire* /artifacts/vampire
 
 # Smoke tests
 RUN echo "############ Smoke tests ############" && \
