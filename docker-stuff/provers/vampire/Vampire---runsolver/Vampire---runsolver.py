@@ -14,7 +14,7 @@ if __name__ == "__main__":
     parser.add_argument("--memory-limit", default=-1, type=int, help="max memory usage in MB")
     parser.add_argument("--intent", default="THM", choices=["THM", "SAT"], help="specify intent")
     parser.add_argument("--dry-run", action="store_true", help="dry run")
-    parser.add_argument("--image-name", default="e---runsolver", help="specify image name")
+    parser.add_argument("--image-name", default="vampire:4.8-runsolver", help="specify image name")
 
     args = parser.parse_args()
 

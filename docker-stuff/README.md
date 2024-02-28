@@ -58,7 +58,7 @@ podman run -v "$PWD/MPT0001+1.p":"/artifacts/MPT0001+1.p" -t e---runsolver MPT00
 
 ## To run using the E---runsolver.py script
 
-python3 E---runsolver.py --image-name eprover:3.0.03-runsolver PUZ001+1.p 
+E---runsolver.py PUZ001+1.p 
 
 ## To put it in dockerhub
 

@@ -21,7 +21,7 @@ if ("$Mode" == "THM") then
         set Command = "$HERE/vampire_rel_static_ahmed-new-hol_6848 --cores 8 --input_syntax tptp --proof tptp --output_axiom_names on --mode portfolio --schedule snake_tptp_hol $PROBLEMFILE -m 12000  -t $2"
     else
         echo "Running first-order theorem proving"
-        set Command = "$HERE/vampire_rel_HEAD_1 --mode portfolio --schedule snake_tptp_uns -p tptp --output_axiom_names on -m 16384 --cores 7 -t $2 $PROBLEMFILE"
+        set Command = "$HERE/vampire --mode portfolio --schedule snake_tptp_uns -p tptp --output_axiom_names on -m 16384 --cores 7 -t $2 $PROBLEMFILE"
     endif
 else
     echo "Running first-order model finding"
