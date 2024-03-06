@@ -4,7 +4,7 @@ RUN git clone --recurse-submodules https://github.com/TPTPWorld/ServiceTools.git
 RUN git clone --recurse-submodules https://github.com/TPTPWorld/TPTP4X.git
 
 # installs after clones (the clones take a while)
-RUN apt-get update && apt-get install -y --no-install-recommends curl libcurl4 libcurl4-gnutls-dev numactl libnuma-dev wget
+RUN apt-get update && apt-get install -y --no-install-recommends libcurl4 libcurl4-gnutls-dev numactl libnuma-dev
 
 # build tptp stuff
 ENV TPTP_HOME /
