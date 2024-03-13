@@ -11,7 +11,7 @@ def getRunsolverArgs(args):
     return f"-C {args.cpu_limit} -W {args.wall_clock_limit}{mem_part}"
 
 
-def getRunscriptArgs(args):
+def getRunscriptArgs(args, args_format):
     parts = {
         'P': "/artifacts/CWD/benchmark",
         'C': args.cpu_limit,
@@ -19,14 +19,13 @@ def getRunscriptArgs(args):
         'I': args.intent,
         'M': args.memory_limit,
     }
-    return ' '.join([str(parts[c.upper()]) for c in args.runscript_args])
+    return ' '.join([str(parts[c.upper()]) for c in args_format])
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("A script that wraps a podman call to a prover image")
     parser.add_argument("image_name", help="Image name e.g., eprover:3.0.03-runsolver-arm64")
     parser.add_argument("runscript", help="The system script and its args, e.g., 'run_E PWI'")
-    # parser.add_argument("-f","--runscript_args", default="P", help="A string for the args (PCWI)")
     parser.add_argument("problem")
     parser.add_argument("-C", "--cpu-limit", default=60, type=int, help="Max CPU time in seconds")
     parser.add_argument("-W", "--wall-clock-limit", default=60, type=int, help="Max wall clock time in seconds")
@@ -35,8 +34,13 @@ if __name__ == "__main__":
     parser.add_argument("--dry-run", action="store_true", help="dry run")
     args = parser.parse_args()
 
-    # Define podman command
-    command = f"podman run -v .:/artifacts/CWD -t {args.image_name} --timestamp {getRunsolverArgs(args)} {args.runscript} {getRunscriptArgs(args)}"
+    # Format arguments
+    runsolverArgs = getRunsolverArgs(args)
+    runscript, runscriptArgsFormat = args.runscript.split()
+    runscriptArgs = getRunscriptArgs(args, runscriptArgsFormat)
+
+    # Construct podman command
+    command = f"podman run -v .:/artifacts/CWD -t {args.image_name} --timestamp {runsolverArgs} {runscript} {runscriptArgs}"
 
     # Run command or print for dry run
     if args.dry_run:
