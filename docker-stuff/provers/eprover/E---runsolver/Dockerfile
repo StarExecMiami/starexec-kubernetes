@@ -8,6 +8,9 @@ WORKDIR /artifacts
 COPY --from=builder /artifacts/eprover /artifacts/
 COPY --from=builder /artifacts/eprover-ho /artifacts/
 
+# run_container script 
+ADD run_container /artifacts/
+
 # run_E script 
 ADD run_E /artifacts/
 
