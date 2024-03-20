@@ -25,7 +25,7 @@ def getRunscriptArgs(args, args_format):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("A script that wraps a podman call to a prover image")
     parser.add_argument("image_name", help="Image name e.g., eprover:3.0.03-runsolver-arm64")
-    parser.add_argument("runscript", help="The system script and its args, e.g., 'run_E PWI'")
+    parser.add_argument("--runscript", default="run PCWMI" help="The system script and its args, e.g., 'run_E PWI'")
     parser.add_argument("problem")
     parser.add_argument("-C", "--cpu-limit", default=60, type=int, help="Max CPU time in seconds")
     parser.add_argument("-W", "--wall-clock-limit", default=60, type=int, help="Max wall clock time in seconds")
