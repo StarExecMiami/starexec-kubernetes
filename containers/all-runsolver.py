@@ -8,7 +8,7 @@ import shutil
 
 def getRunsolverArgs(args):
     mem_part = f" -M {args.memory_limit}" if args.memory_limit > 0 else ""
-    return f"-C {args.cpu_limit} -W {args.wall_clock_limit}{mem_part}"
+    return f"--timestamp --watcher-data /dev/null -C {args.cpu_limit} -W {args.wall_clock_limit}{mem_part}"
 
 
 def getRunscriptArgs(args, args_format):
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     runscriptArgs = getRunscriptArgs(args, runscriptArgsFormat)
 
     # Construct podman command
-    command = f"podman run -v .:/artifacts/CWD -t {args.image_name} --timestamp {runsolverArgs} {runscript} {runscriptArgs}"
+    command = f"podman run -v .:/artifacts/CWD -t {args.image_name} {runsolverArgs} {runscript} {runscriptArgs}"
 
     # Run command or print for dry run
     if args.dry_run:

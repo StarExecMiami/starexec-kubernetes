@@ -10,7 +10,10 @@ WORKDIR /artifacts
 # Leo-III-specific stuff from ostensibly external image
 COPY --from=builder /artifacts/leo3* /artifacts/
 
-# run_E script 
+# run_container script 
+ADD run_container /artifacts/
+
+# run_Leo-III script 
 ADD run_Leo-III /artifacts/
 
 ENTRYPOINT ["runsolver", "--timestamp"]

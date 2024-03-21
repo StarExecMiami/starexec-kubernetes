@@ -8,7 +8,7 @@ LEO3_VERSION = 1.7.0
 # High level targets ########################################################
 all: base provers
 
-base: ubuntu-build scala-build tptp-world-build
+base: ubuntu-build tptp-world-build
 
 provers: eprover leo3 vampire
 
@@ -49,11 +49,11 @@ vampire-runsolver:
 
 
 # Leo3 targets: #############################################################
-leo3: scala-build leo3-build leo3-runsolver
+leo3: leo3-build leo3-runsolver
 
 leo3-build: 
 	podman build -t leo3-build ./provers/leo3/Leo-III---$(LEO3_VERSION)/build
 
 leo3-runsolver: 
-	podman build -t leo3:$(LEO3_VERSION)-runsolver ./provers/leo3/Leo---runsolver
+	podman build -t leo3:$(LEO3_VERSION)-runsolver ./provers/leo3/Leo-III---runsolver
 
