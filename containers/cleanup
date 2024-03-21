@@ -1,0 +1,8 @@
+# Cleanup everything (Podman)
+podman system prune --all --force && podman rmi --all
+
+# Forced cleanup (Podman)
+podman rmi --all --force
+
+# Cleanup everything (Docker)
+docker system prune --all --force &&  docker rmi $(docker images -a -q)
