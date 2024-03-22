@@ -58,7 +58,7 @@ podman build -t eprover:3.0.03-runsolver .
 
 ## To run using the runsystem.py script
 
-E---runsolver.py PUZ001+1.p 
+runsystem.py runsolver.py eprover:3.0.03-runsolver -P ../TPTP-problems/PUZ001+1.p -W 60 -I THM
 
 ## To put it in dockerhub
 
@@ -69,11 +69,4 @@ podman push docker.io/tptpstarexec/eprover:3.0.03-runsolver-your_architecture
 ## To pull it from dockerhub
 
 podman pull tptpstarexec/e-runsolver:your_architecture
-
-## To run it 
-
-You need the E---runsolver.py script and a problem e.g., PUZ001+1.p (both in GitHub)
-cd provers/E---runsolver
-python3 E---runsolver.py --image-name docker.io/tptpstarexec/e-runsolver:your_architecture PUZ001+1.p
-
 
