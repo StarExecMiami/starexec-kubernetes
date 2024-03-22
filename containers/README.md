@@ -1,11 +1,11 @@
-######## IMPORTANT ##########
-The container images in the folder "provers" depend on (some of) the images in the folder "base-build".
-Look at the README file in the corresponding prover's folder for information about image dependencies that need to be built first (and which tags to use).
-
 ####### GENERAL INFO #######
+The container images in the folder "provers" depend on (some of) the images in the folder 
+"base-build".
+
 We recommend using Podman (which is intended to work as a drop-in replacement for Docker).
 See Podman installation instructions: https://podman.io/docs/installation
 
+## How to do podman/docker actions
 
 Building a container image with Podman/Docker:
 >> podman/docker build -t <TAG_NAME> <PATH_TO_DIRECTORY_WHERE_DOCKERFILE_LIES>
@@ -16,6 +16,14 @@ Running a container (from an image) with Podman/Docker (entrypoint):
 Running a container with Podman/Docker (interactive shell):
 >> podman/docker run --rm -it <TAG_NAME>
 
+Cleanup everything (Podman):
+podman system prune --all --force && podman rmi --all
+
+Forced cleanup (Podman):
+podman rmi --all --force
+
+Cleanup everything (Docker):
+docker system prune --all --force &&  docker rmi $(docker images -a -q)
 
 
 ## To build and run a TPTP docker image for E (example)
@@ -30,7 +38,7 @@ podman image ls   # to see what was built
 
 Now build `tptp-world-build` image:
 ```shell
-cd ../tptp-world-build
+cd tptp-world-build
 podman build -t tptp-world-build .
 ```
 
@@ -38,7 +46,7 @@ Now build `eprover-build` image. Note that the version number is not in the tag,
 step to build the eprover:version-runsolver image will always use the eprover-build:latest, 
 which might be a new version of E.
 ```shell
-cd ../../provers/eprover/E---3.0.03/build/
+cd provers/eprover/E---3.0.03/build/
 podman build -t eprover-build .
 ```
 
@@ -48,15 +56,7 @@ cd ../../E---runsolver
 podman build -t eprover:3.0.03-runsolver .
 ```
 
-Now you cannot run the image to see the results:
-(Goto next instruction and the python script gives an example if you want 
-to see how to actually invoke podman)
-```shell
-cd ../../../ # back to docker-stuff dir
-podman run -v "$PWD/MPT0001+1.p":"/artifacts/MPT0001+1.p" -t e---runsolver MPT0001+1.p 10 THM
-```
-
-## To run using the E---runsolver.py script
+## To run using the runsystem.py script
 
 E---runsolver.py PUZ001+1.p 
 
