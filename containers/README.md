@@ -59,7 +59,7 @@ podman build -t eprover:3.0.03-runsolver .
 ## To run using the runsystem.py script
 
 ```shell
-runsystem.py runsolver.py eprover:3.0.03-runsolver -P ../TPTP-problems/PUZ001+1.p -W 60 -I THM
+runsystem.py eprover:3.0.03-runsolver -P ../TPTP-problems/PUZ001+1.p -W 60 -I THM
 ```
 
 ## To put it in dockerhub
