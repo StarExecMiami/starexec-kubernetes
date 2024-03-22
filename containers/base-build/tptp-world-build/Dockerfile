@@ -6,7 +6,8 @@ RUN git clone --recurse-submodules https://github.com/TPTPWorld/TPTP4X.git
 # installs after clones (the clones take a while)
 RUN apt-get update && apt-get install -y --no-install-recommends libcurl4 libcurl4-gnutls-dev numactl libnuma-dev
 
-# build tptp stuff
+# Build tptp stuff. /artifacts is where we put all relevant executables and is the working dir.
+# It is created in ubuntu-build
 ENV TPTP_HOME /
 RUN cd ServiceTools/JJUsers && make SPCForProblem 
 RUN cd TPTP4X && make tptp4X
@@ -19,6 +20,11 @@ RUN tar -xjf runsolver-3.4.1.tar.bz2
 WORKDIR /runsolver/src
 RUN make
 RUN cp /runsolver/src/runsolver /artifacts/
+
+# /benchmark is where we put the TPTP problem.
+RUN mkdir -p /benchmark
+
+WORKDIR /artifacts
 
 #----Not using benchexec for now, need this (or Sofia's C version) in the future.
 # # build benchexec/runexec
@@ -58,13 +64,4 @@ RUN cp /runsolver/src/runsolver /artifacts/
 # 
 # # Creating a directory for benchexec
 # RUN mkdir /home/benchexec
-
-# Convention:
-# /artifacts/ is where we will put all relevant executables and will the working dir.
-# /benchmark/ is where we will put the TPTP problem.
-RUN mkdir -p /artifacts
-RUN mkdir -p /benchmark
-
-WORKDIR /artifacts
-
 

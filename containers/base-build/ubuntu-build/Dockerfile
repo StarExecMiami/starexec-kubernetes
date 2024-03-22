@@ -8,7 +8,7 @@ RUN apt-get update && \
 RUN export GIT_SSL_NO_VERIFY=1 && \
     git config --global http.sslverify false
 
-# Create "/artifacts" directory for build artifacts
-RUN mkdir /artifacts/
+# /artifacts is where we will put all relevant executables and will the working dir.
+RUN mkdir -p /artifacts
 
 ENTRYPOINT ["/bin/bash"]

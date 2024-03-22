@@ -1,3 +1,4 @@
+#------------------------------------------------------------
 FROM ubuntu-build
 
 # Clones repository
@@ -17,6 +18,7 @@ RUN ./configure --bindir=/artifacts && \
 RUN ./configure --enable-ho && \
     make rebuild
 RUN cp PROVER/eprover-ho /artifacts/eprover-ho
+#------------------------------------------------------------
 
 # Smoke tests
 RUN echo "############ Smoke tests ############" && \
