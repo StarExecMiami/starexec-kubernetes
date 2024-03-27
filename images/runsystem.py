@@ -36,7 +36,7 @@ if __name__ == "__main__":
 help="Image name, e.g., eprover:3.0.03-runsolver-arm64")
     parser.add_argument("-P", "--problem", 
 help="Problem file if not stdin")
-    parser.add_argument("--runscript", default="run_container PCWMI", 
+    parser.add_argument("--runscript", default="run_image PCWMI", 
 help="System script and its args, e.g., 'run_E PWI'")
     parser.add_argument("-C", "--cpu-limit", default=60, type=int, 
 help="Max CPU time in seconds")
