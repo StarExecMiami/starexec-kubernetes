@@ -37,15 +37,15 @@ help="Image name, e.g., eprover:3.0.03-runsolver-arm64")
     parser.add_argument("-P", "--problem", 
 help="Problem file if not stdin")
     parser.add_argument("--runscript", default="run_system PCWMI", 
-help="System script and its args, e.g., 'run_E PWI'")
+help="System script and its args, e.g., 'run_E PWI', default=run_system PCWMI")
     parser.add_argument("-C", "--cpu-limit", default=60, type=int, 
-help="Max CPU time in seconds")
+help="CPU time limit in seconds, default=60")
     parser.add_argument("-W", "--wall-clock-limit", default=60, type=int, 
-help="Max wall clock time in seconds")
+help="Wall clock time limit in seconds, default=60")
     parser.add_argument("-M", "--memory-limit", default=-1, type=int, 
-help="Max memory usage in MB")
+help="Memory limit in MB, default=none")
     parser.add_argument("-I", "--intent", default="THM", choices=["THM", "SAT"], 
-help="Intention (THM, SAT, etc)")
+help="Intention (THM, SAT, etc), default=THM")
     parser.add_argument("--dry-run", action="store_true", 
 help="dry run")
     args = parser.parse_args()
