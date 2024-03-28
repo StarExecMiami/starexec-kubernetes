@@ -8,7 +8,7 @@ WORKDIR /artifacts
 COPY --from=builder /artifacts/vampire /artifacts/
 
 # Add run_container script 
-ADD run_container /artifacts/
+ADD run_system /artifacts/
 
 # Add run_vampire script 
 ADD run_vampire /artifacts/

@@ -11,7 +11,7 @@ WORKDIR /artifacts
 COPY --from=builder /artifacts/leo3* /artifacts/
 
 # run_container script 
-ADD run_container /artifacts/
+ADD run_system /artifacts/
 
 # run_Leo-III script 
 ADD run_Leo-III /artifacts/
