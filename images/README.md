@@ -56,10 +56,10 @@ cd ../../E---runsolver
 podman build -t eprover:3.0.03-runsolver .
 ```
 
-## To run using the runsystem.py script
+## To run using the run_image.py script
 
 ```shell
-runsystem.py eprover:3.0.03-runsolver -P ../TPTP-problems/PUZ001+1.p -W 60 -I THM
+run_image.py eprover:3.0.03-runsolver -P ../TPTP-problems/PUZ001+1.p -W 60 -I THM
 ```
 
 ## To put it in dockerhub

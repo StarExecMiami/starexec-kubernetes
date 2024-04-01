@@ -14,7 +14,7 @@ f"{args.cpu_limit} -W {args.wall_clock_limit}{mem_part}"
 
 def getRunscriptArgs(args, args_format):
     parts = {
-        'P': "/artifacts/CWD/benchmark",
+        'P': "/artifacts/CWD/problemfile",
         'C': args.cpu_limit,
         'W': args.wall_clock_limit,
         'I': args.intent,
@@ -24,10 +24,10 @@ def getRunscriptArgs(args, args_format):
 
 def makeBenchmark(problem):
     if problem:
-        shutil.copy(problem, "./benchmark")
+        shutil.copy(problem, "./problemfile")
     else:
-        with open('./benchmark', 'w') as benchmark:
-            benchmark.write(sys.stdin.read())
+        with open('./problemfile', 'w') as problemfile:
+            problemfile.write(sys.stdin.read())
 
 
 if __name__ == "__main__":
@@ -65,6 +65,6 @@ f"{args.image_name} {runsolverArgs} {runscript} {runscriptArgs}"
     else:
         makeBenchmark(args.problem)
         subprocess.run(command, shell=True)
-        os.remove("./benchmark")
+        os.remove("./problemfile")
     
 
