@@ -46,20 +46,19 @@ Now build `eprover-build` image. Note that the version number is not in the tag,
 step to build the eprover:version-runsolver image will always use the eprover-build:latest, 
 which might be a new version of E.
 ```shell
-cd provers/eprover/E---3.0.03/build/
-podman build -t eprover-build .
+cd provers/eprover/E---3.0.03
+podman build -t eprover.
 ```
 
-Now build `eprover:version-runsolver` image:
+Now build `eprover:version-RLR` image:
 ```shell
-cd ../../E---runsolver
-podman build -t eprover:3.0.03-runsolver .
+cd ../../E---RLR
+podman build -t eprover:3.0.03-RLR .
 ```
 
 ## To run using the run_image.py script
-
 ```shell
-run_image.py eprover:3.0.03-runsolver -P ../TPTP-problems/PUZ001+1.p -W 60 -I THM
+run_image.py eprover:3.0.03-RLR -P ../TPTP-problems/PUZ001+1.p -W 60 -I THM
 ```
 
 ## To put it in dockerhub
