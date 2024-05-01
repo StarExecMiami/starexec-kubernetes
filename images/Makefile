@@ -29,13 +29,13 @@ tptp-world-build: ubuntu-build
 #############################################################################
 
 # Eprover targets: #########################################################
-eprover: ubuntu-build eprover-build eprover-runsolver
+eprover: ubuntu-build eprover-RAW eprover-RLR
 
-eprover-build: tptp-world-build
-	podman build -t eprover-build ./provers/eprover/E---$(EPROVER_VERSION)/build
+eprover-RAW: tptp-world-build
+	podman build -t eprover$(EPROVER_VERSION) ./provers/eprover/E---$(EPROVER_VERSION)
 
-eprover-runsolver: eprover-build
-	podman build -t eprover:$(EPROVER_VERSION)-runsolver ./provers/eprover/E---runsolver
+eprover-RLR: eprover-RAW
+	podman build -t eprover:$(EPROVER_VERSION)-RLR ./provers
 
 
 # Vampire targets: ###########################################################
