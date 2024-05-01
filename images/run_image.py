@@ -12,15 +12,16 @@ def getRunsolverArgs(args):
 f"{args.cpu_limit} -W {args.wall_clock_limit}{mem_part}"
 
 
-def getRunscriptArgs(args, args_format):
-    parts = {
-        'P': "/artifacts/CWD/problemfile",
-        'C': args.cpu_limit,
-        'W': args.wall_clock_limit,
-        'I': args.intent,
-        'M': args.memory_limit,
-    }
-    return ' '.join([str(parts[c.upper()]) for c in args_format])
+
+def getEnvVars(args):
+    return " ".join([f"-e {k}='{v}'" for k, v in [
+        ("RLR_INPUT_FILE", "/artifacts/CWD/problemfile"),
+        ("RLR_CPU_LIMIT", args.cpu_limit),
+        ("RLR_WC_LIMIT", args.wall_clock_limit),
+        ("RLR_MEM_LIMIT", args.memory_limit),
+        ("RLR_INTENT", args.intent),
+    ]])
+
 
 def makeBenchmark(problem):
     if problem:
@@ -36,11 +37,9 @@ if __name__ == "__main__":
 help="Image name, e.g., eprover:3.0.03-runsolver-arm64")
     parser.add_argument("-P", "--problem", 
 help="Problem file if not stdin")
-    parser.add_argument("--runscript", default="run_system PCWMI", 
-help="System script and its args, e.g., 'run_E PWI', default=run_system PCWMI")
-    parser.add_argument("-C", "--cpu-limit", default=60, type=int, 
+    parser.add_argument("-C", "--cpu-limit", default=-1, type=int, 
 help="CPU time limit in seconds, default=60")
-    parser.add_argument("-W", "--wall-clock-limit", default=60, type=int, 
+    parser.add_argument("-W", "--wall-clock-limit", default=-1, type=int, 
 help="Wall clock time limit in seconds, default=60")
     parser.add_argument("-M", "--memory-limit", default=-1, type=int, 
 help="Memory limit in MB, default=none")
@@ -52,12 +51,11 @@ help="dry run")
 
     # Format arguments
     runsolverArgs = getRunsolverArgs(args)
-    runscript, runscriptArgsFormat = args.runscript.split()
-    runscriptArgs = getRunscriptArgs(args, runscriptArgsFormat)
 
-    # Construct podman command
-    command = "podman run -v .:/artifacts/CWD -t " + \
-f"{args.image_name} {runsolverArgs} {runscript} {runscriptArgs}"
+
+    command = f"podman run {getEnvVars(args)} -v .:/artifacts/CWD -t " + \
+f"{args.image_name} {runsolverArgs} run_system"
+
 
     # Run command or print for dry run
     if args.dry_run:
