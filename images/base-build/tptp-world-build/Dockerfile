@@ -14,54 +14,22 @@ RUN cd TPTP4X && make tptp4X
 RUN cp ServiceTools/JJUsers/SPCForProblem /artifacts/
 RUN cp TPTP4X/tptp4X /artifacts/
 
-# build runsolver
+# Build runsolver
 RUN wget --no-check-certificate https://www.cril.univ-artois.fr/~roussel/runsolver/runsolver-3.4.1.tar.bz2
 RUN tar -xjf runsolver-3.4.1.tar.bz2 
 WORKDIR /runsolver/src
+#----runsolver is old and broken - hacking workarounds
+RUN sed -i -e "s/CFLAGS=/CFLAGS=-fpermissive /" Makefile
 RUN make
 RUN cp /runsolver/src/runsolver /artifacts/
+
+# Build RLR
+# RUN git clone https://github.com/StarExecMiami/ResourceLimitedRun.git
+# RUN cd ResourceLimitedRun && make ResourceLimitedRun
+# RUN cp ResourceLimitedRun/ResourceLimitedRun /artifacts/
 
 # /benchmark is where we put the TPTP problem.
 RUN mkdir -p /benchmark
 
 WORKDIR /artifacts
-
-#----Not using benchexec for now, need this (or Sofia's C version) in the future.
-# # build benchexec/runexec
-# RUN apt-get update && apt-get install -y --no-install-recommends \
-#     build-base \
-#     gcc \
-#     openssl-dev \
-#     bzip2-dev \
-#     libffi-dev \
-#     zlib-dev \
-#     sqlite-dev \
-#     xz-dev \
-#     tk-dev \
-#     db-dev \
-#     gdbm-dev \
-#     ncurses-dev \
-#     readline-dev \
-#     wget \
-#     python3 \
-#     python3-dev
-# 
-# # Downloading and building Python 3.9
-# WORKDIR /tmp
-# RUN wget https://www.python.org/ftp/python/3.9.6/Python-3.9.6.tgz \
-#     && tar -xvf Python-3.9.6.tgz \
-#     && cd Python-3.9.6 \
-#     && ./configure \
-#     && make \
-#     && make altinstall
-# 
-# # Installing pip for Python 3.9
-# RUN wget https://bootstrap.pypa.io/get-pip.py \
-#     && /usr/local/bin/python3.9 get-pip.py
-# 
-# # Installing benchexec with pip
-# RUN /usr/local/bin/python3.9 -m pip install benchexec
-# 
-# # Creating a directory for benchexec
-# RUN mkdir /home/benchexec
 

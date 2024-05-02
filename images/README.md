@@ -59,7 +59,7 @@ podman build -t eprover:3.0.03-RLR --build-arg PROVER_IMAGE=eprover:3.0.03 .
 ## To run using the run_image.py script
 ```shell
 cd starexec-kubernetes/images/provers
-run_image.py eprover:3.0.03-RLR -P ../TPTP-problems/PUZ001+1.p -W 60 -I THM
+run_image.py eprover:3.0.03-RLR -P ../../TPTP-problems/PUZ001+1.p -W 60 -I THM
 ```
 
 ## To put it in dockerhub
