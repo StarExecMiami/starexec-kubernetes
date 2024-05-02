@@ -36,11 +36,11 @@ if __name__ == "__main__":
 help="Image name, e.g., eprover:3.0.03-RLR-arm64")
     parser.add_argument("-P", "--problem", 
 help="Problem file if not stdin")
-    parser.add_argument("-C", "--cpu-limit", default=-1, type=int, 
-help="CPU time limit in seconds, default=60")
-    parser.add_argument("-W", "--wall-clock-limit", default=-1, type=int, 
-help="Wall clock time limit in seconds, default=60")
-    parser.add_argument("-M", "--memory-limit", default=-1, type=int, 
+    parser.add_argument("-C", "--cpu-limit", default=0, type=int, 
+help="CPU time limit in seconds, default=none")
+    parser.add_argument("-W", "--wall-clock-limit", default=0, type=int, 
+help="Wall clock time limit in seconds, default=none")
+    parser.add_argument("-M", "--memory-limit", default=0, type=int, 
 help="Memory limit in MB, default=none")
     parser.add_argument("-I", "--intent", default="THM", choices=["THM", "SAT"], 
 help="Intention (THM, SAT, etc), default=THM")
