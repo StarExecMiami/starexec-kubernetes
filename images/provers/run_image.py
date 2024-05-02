@@ -13,11 +13,12 @@ f"{args.cpu_limit} -W {args.wall_clock_limit}{mem_part}"
 
 
 def getEnvVars(args):
+
     return " ".join([f"-e {k}='{v}'" for k, v in [
         ("RLR_INPUT_FILE", "/artifacts/CWD/problemfile"),
         ("RLR_CPU_LIMIT", args.cpu_limit),
         ("RLR_WC_LIMIT", args.wall_clock_limit),
-        ("RLR_MEM_LIMIT", args.memory_limit),
+        ("RLR_RAM_LIMIT", args.memory_limit),
         ("RLR_INTENT", args.intent),
     ]])
 
@@ -48,12 +49,13 @@ help="Intention (THM, SAT, etc), default=THM")
 help="dry run")
     args = parser.parse_args()
 
-    # Format arguments
-    RLRArgs = getRLRArgs(args)
 
+    if args.wall_clock_limit == 0 and args.cpu_limit != 0:
+        args.wall_clock_limit = args.cpu_limit
+        
 
     command = f"podman run {getEnvVars(args)} -v .:/artifacts/CWD -t " + \
-f"{args.image_name} {RLRArgs} run_system"
+f"{args.image_name} {getRLRArgs(args)} run_system"
 
 
     # Run command or print for dry run
