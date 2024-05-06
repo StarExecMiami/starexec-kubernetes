@@ -32,7 +32,7 @@ tptp-world-build: ubuntu-build
 eprover: ubuntu-build eprover-RAW eprover-RLR
 
 eprover-RAW: tptp-world-build
-	podman build -t eprover:$(EPROVER_VERSION) ./provers/eprover/E---$(EPROVER_VERSION)
+	podman build -t eprover:$(EPROVER_VERSION) ./provers/E---$(EPROVER_VERSION)
 
 eprover-RLR: eprover-RAW
 	podman build -t eprover:$(EPROVER_VERSION)-RLR --build-arg PROVER_IMAGE=eprover:$(EPROVER_VERSION) ./provers

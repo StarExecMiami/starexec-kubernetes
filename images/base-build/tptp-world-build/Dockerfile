@@ -24,9 +24,9 @@ RUN make
 RUN cp /runsolver/src/runsolver /artifacts/
 
 # Build RLR
-# RUN git clone https://github.com/StarExecMiami/ResourceLimitedRun.git
-# RUN cd ResourceLimitedRun && make ResourceLimitedRun
-# RUN cp ResourceLimitedRun/ResourceLimitedRun /artifacts/
+RUN git clone https://github.com/StarExecMiami/ResourceLimitedRun.git
+RUN cd ResourceLimitedRun && make ResourceLimitedRun
+RUN cp ResourceLimitedRun/ResourceLimitedRun /artifacts/
 
 # /benchmark is where we put the TPTP problem.
 RUN mkdir -p /benchmark
