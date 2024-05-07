@@ -28,25 +28,22 @@ docker system prune --all --force &&  docker rmi $(docker images -a -q)
 
 ## To build and run a TPTP docker image for E (example)
 
-First clone this repo and build `ubuntu-build` image:
+First clone this repo and build `ubuntu-arc` image:
 ```shell
 git clone https://github.com/StarExecMiami/starexec-kubernetes.git  NEEDS TO BE UPDATED
-cd starexec-kubernetes/images/base-build/ubuntu-ARC
+cd provers-containerised/ubuntu-arc
 podman build -t ubuntu-arc .
-podman image ls   # to see what was built
 ```
 
-Now build `tptp-world-build` image:
+Now build `tptp-world` image:
 ```shell
-cd starexec-kubernetes/images/base-build/tptp-world
+cd provers-containerised/tptp-world
 podman build -t tptp-world .
 ```
 
-Now build `eprover-build` image. Note that the version number is not in the tag, so the next
-step to build the eprover:version-runsolver image will always use the eprover-build:latest, 
-which might be a new version of E.
+Now build `eprover` image. 
 ```shell
-cd starexec-kubernetes/images/provers/eprover/E---3.0.03
+cd provers-containerised/provers/E---3.0.03 
 podman build -t eprover:3.0.03 .
 ```
 
@@ -58,14 +55,13 @@ podman build -t eprover:3.0.03-RLR --build-arg PROVER_IMAGE=eprover:3.0.03 .
 
 ## To run using the run_image.py script
 ```shell
-cd starexec-kubernetes/images/provers
+cd provers-containerised/provers
 run_image.py eprover:3.0.03-RLR -P ../../TPTP-problems/PUZ001+1.p -W 60 -I THM
 ```
 
 ## To put it in dockerhub
-
 podman login docker.io (tptpstarexec, German greeting with money-in-middle and zeros-at-the-end)
-podman tag eprover:3.0.03-RLR docker.io/tptpstarexec/eprover:3.0.03-runsolver-your_architecture (e.g., arm64, amd64)
+podman tag eprover:3.0.03-RLR docker.io/tptpstarexec/eprover:3.0.03-RLR-your_architecture (e.g., arm64, amd64)
 podman push docker.io/tptpstarexec/eprover:3.0.03-RLR-your_architecture
 
 ## To pull it from dockerhub

@@ -8,30 +8,29 @@ LEO3_VERSION = 1.7.0
 # High level targets ########################################################
 all: base provers
 
-base: ubuntu-build tptp-world-build
+base: ubuntu-arc tptp-world
 
-provers: eprover leo3 vampire
+provers: eprover 
+# leo3 vampire
 
 # Prerequisite targets ######################################################
-ubuntu-build:
-	podman build -t ubuntu-build ./base-build/ubuntu-build
+ubuntu-arc:
+	podman build -t ubuntu-arc .//ubuntu-arc
 
-scala-build:
-	podman build -t scala-build ./base-build/scala-build
+#scala-build:
+#	podman build -t scala-build ./base-build/scala-build
 
-tptp-world-build: ubuntu-build
-	podman build -t tptp-world-build ./base-build/tptp-world-build
-
-
+tptp-world: ubuntu-arc
+	podman build -t tptp-world ./tptp-world
 
 #############################################################################
 # Targets for each prover ###################################################
 #############################################################################
 
 # Eprover targets: #########################################################
-eprover: ubuntu-build eprover-RAW eprover-RLR
+eprover: ubuntu-arc eprover-RAW eprover-RLR
 
-eprover-RAW: tptp-world-build
+eprover-RAW: tptp-world
 	podman build -t eprover:$(EPROVER_VERSION) ./provers/E---$(EPROVER_VERSION)
 
 eprover-RLR: eprover-RAW
@@ -39,7 +38,7 @@ eprover-RLR: eprover-RAW
 
 
 # Vampire targets: ###########################################################
-vampire: ubuntu-build vampire-build vampire-runsolver
+vampire: ubuntu-arc vampire-build vampire-runsolver
 
 vampire-build: 
 	podman build -t vampire-build ./provers/vampire/Vampire---$(VAMPIRE_VERSION)/build
