@@ -1,42 +1,74 @@
-David's Wiki
-https://github.com/davfuenmayor/tptp-utilities/wiki
+## GENERAL INFO ##
+The container images in the folder "provers" depend on (some of) the images in the folder 
+"base-build".
 
-On Geoff's Mac:
----------------
-# Starting and stopping microk8s
-microk8s start 
-microk8s stop
+We recommend using Podman (which is intended to work as a drop-in replacement for Docker).
+See Podman installation instructions: https://podman.io/docs/installation
 
-# About microk8s on Mac ... https://microk8s.io/docs/install-macos
-# First tutorial ... https://microk8s.io/docs/getting-started
-# More tutorials:  https://ubuntu.com/tutorials?q=microk8s
+## How to do podman/docker actions
 
-#----How far I got with Kubernetes
-microk8s start
-microk8s status --wait-ready
+Building a container image with Podman/Docker:
+>> podman/docker build -t <TAG_NAME> <PATH_TO_DIRECTORY_WHERE_DOCKERFILE_LIES>
 
-microk8s kubectl get nodes
-NAME          STATUS   ROLES    AGE   VERSION
-microk8s-vm   Ready    <none>   24h   v1.27.5
+Running a container (from an image) with Podman/Docker (entrypoint):
+>> podman/docker run --rm [--entrypoint <ENTRYPOINT_FILE>] <TAG_NAME> <ARGS>
 
-microk8s kubectl get services
-alias kubectl 'microk8s kubectl'
-microk8s kubectl create deployment nginx --image=nginx
-# That worked. What is nginx?? It's a web service for load balancing
-microk8s kubectl get pods
-microk8s enable dns
-microk8s enable hostpath-storage
-microk8s status
+Running a container with Podman/Docker (interactive shell):
+>> podman/docker run --rm -it <TAG_NAME>
 
-microk8s add-node
-#----This needs to be done from the new node, but how do I get onto it?
-microk8s join 192.168.64.2:25000/86fd6947d1bc2cc35dbe67394d1269b4/f9266370f430
+Cleanup everything (Podman):
+podman system prune --all --force && podman rmi --all
 
-microk8s dashboard-proxy
-# Connected from browser
+Forced cleanup (Podman):
+podman rmi --all --force
 
-#----To stop the nginx
-kubectl scale deployment nginx --replicas=0
+Cleanup everything (Docker):
+docker system prune --all --force &&  docker rmi $(docker images -a -q)
 
-#----Trying to do what David did
-# edited servces.yaml
+
+## To build and run a TPTP docker image for E (example)
+
+First clone this repo and build `ubuntu-build` image:
+```shell
+git clone https://github.com/StarExecMiami/starexec-kubernetes.git
+cd starexec-kubernetes/images/base-build/ubuntu-build
+podman build -t ubuntu-build .
+podman image ls   # to see what was built
+```
+
+Now build `tptp-world-build` image:
+```shell
+cd starexec-kubernetes/images/base-build/tptp-world-build
+podman build -t tptp-world-build .
+```
+
+Now build `eprover-build` image. Note that the version number is not in the tag, so the next
+step to build the eprover:version-runsolver image will always use the eprover-build:latest, 
+which might be a new version of E.
+```shell
+cd starexec-kubernetes/images/provers/eprover/E---3.0.03
+podman build -t eprover:3.0.03 .
+```
+
+Now build `eprover:version-RLR` image using the generic RLR Dockerfile
+```shell
+cd starexec-kubernetes/images/provers
+podman build -t eprover:3.0.03-RLR --build-arg PROVER_IMAGE=eprover:3.0.03 .
+```
+
+## To run using the run_image.py script
+```shell
+cd starexec-kubernetes/images/provers
+run_image.py eprover:3.0.03-RLR -P ../../TPTP-problems/PUZ001+1.p -W 60 -I THM
+```
+
+## To put it in dockerhub
+
+podman login docker.io (tptpstarexec, German greeting with money-in-middle and zeros-at-the-end)
+podman tag eprover:3.0.03-RLR docker.io/tptpstarexec/eprover:3.0.03-runsolver-your_architecture (e.g., arm64, amd64)
+podman push docker.io/tptpstarexec/eprover:3.0.03-RLR-your_architecture
+
+## To pull it from dockerhub
+
+podman pull tptpstarexec/eprover:3.0.03-RLR-your_architecture
+
