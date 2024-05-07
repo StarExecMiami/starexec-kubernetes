@@ -30,16 +30,16 @@ docker system prune --all --force &&  docker rmi $(docker images -a -q)
 
 First clone this repo and build `ubuntu-build` image:
 ```shell
-git clone https://github.com/StarExecMiami/starexec-kubernetes.git
-cd starexec-kubernetes/images/base-build/ubuntu-build
-podman build -t ubuntu-build .
+git clone https://github.com/StarExecMiami/starexec-kubernetes.git  NEEDS TO BE UPDATED
+cd starexec-kubernetes/images/base-build/ubuntu-ARC
+podman build -t ubuntu-arc .
 podman image ls   # to see what was built
 ```
 
 Now build `tptp-world-build` image:
 ```shell
-cd starexec-kubernetes/images/base-build/tptp-world-build
-podman build -t tptp-world-build .
+cd starexec-kubernetes/images/base-build/tptp-world
+podman build -t tptp-world .
 ```
 
 Now build `eprover-build` image. Note that the version number is not in the tag, so the next
